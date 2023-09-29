@@ -1,0 +1,35 @@
+{
+    "name": "buku-masjid/demo-data",
+    "description": "Generate data demo untuk simulasi.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BukuMasjid\\DemoData\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nafies Luthfi",
+            "email": "nafiesl@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">= 8.1",
+        "laravel/framework": "^10.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BukuMasjid\\DemoData\\ServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+         "test": "vendor/bin/phpunit"
+    }
+}
