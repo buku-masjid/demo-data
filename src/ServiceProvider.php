@@ -8,7 +8,11 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
-        //
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                GenerateDemoData::class,
+            ]);
+        }
     }
 
     public function boot()
