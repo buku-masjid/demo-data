@@ -8,16 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 class GenerateDemoData extends Command
 {
-    protected $signature = 'buku-masjid:generate-demo-data';
+    protected $signature = 'buku-masjid:generate-demo-data
+                            {--reset-all : Reset seluruh isi database}
+                            ';
 
     protected $description = 'Generate data demo untuk simulasi.';
 
     public function handle()
     {
-        $confirm = $this->confirm('Kosongkan seluruh isi database?');
-        if ($confirm) {
-            $this->call('migrate:fresh', ['--seed' => true]);
+        $confirm = $this->confirm('Anda yakin ini generate data demo?');
+        if ($confirm == false) {
+            return;
         }
+
+        if ($this->option('reset-all')) {
+            $confirm = $this->confirm('Kosongkan seluruh isi database?');
+            if ($confirm) {
+                $this->call('migrate:fresh', ['--seed' => true]);
+            }
+        }
+
         $this->generateBooks();
         $this->generateBankAccounts();
         $this->generateBankAccountBalances();
