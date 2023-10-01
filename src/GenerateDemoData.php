@@ -78,27 +78,43 @@ class GenerateDemoData extends Command
     public function generateLecturingSchedulesWithTransactions()
     {
         $this->comment(date('Y-m-d H:i:s').' Start generate Lecturing Schedules...');
+        $dateRange = $this->getDateRange();
+        foreach ($dateRange as $date) {
+            $this->generateLecturingScheduleWithTransactions($date);
+        }
+        $this->comment(date('Y-m-d H:i:s').' Finish generate Lecturing Schedules');
+    }
+
+    private function getDateRange(): array
+    {
+        $dateRange = [];
         $montRange = range(0, 2);
         rsort($montRange);
         foreach ($montRange as $number) {
             $monthDate = Carbon::parse(now()->format('Y-m-').'10')->subMonths($number);
             foreach (range(1, $monthDate->format('t')) as $dateNumber) {
                 $dateNumber = str_pad($dateNumber, 2, 0, STR_PAD_LEFT);
-                $date = Carbon::parse($monthDate->format('Y-m-').$dateNumber);
-                $dayName = $date->locale('en_EN')->dayName;
-                $generatorClassName = 'BukuMasjid\DemoData\Lecturings\\'.$dayName.'LecturingGenerator';
-                if (class_exists($generatorClassName)) {
-                    (new $generatorClassName)->generate($date);
-                }
-                if ($date->lessThanOrEqualTo(today())) {
-                    $generatorClassName = 'BukuMasjid\DemoData\Lecturings\\'.$dayName.'LecturingTransactionsGenerator';
-                    if (class_exists($generatorClassName)) {
-                        (new $generatorClassName)->generate($date);
-                    }
-                }
+                $dateRange[] = Carbon::parse($monthDate->format('Y-m-').$dateNumber);
             }
         }
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Lecturing Schedules');
+
+        return $dateRange;
+    }
+
+    private function generateLecturingScheduleWithTransactions(Carbon $date): void
+    {
+        $dayName = $date->locale('en_EN')->dayName;
+        $generatorClassNamespace = 'BukuMasjid\DemoData\Lecturings\\';
+        $generatorClassName = $generatorClassNamespace.$dayName.'LecturingGenerator';
+        if (class_exists($generatorClassName)) {
+            (new $generatorClassName)->generate($date);
+        }
+        if ($date->lessThanOrEqualTo(today())) {
+            $generatorClassName = $generatorClassNamespace.$dayName.'LecturingTransactionsGenerator';
+            if (class_exists($generatorClassName)) {
+                (new $generatorClassName)->generate($date);
+            }
+        }
     }
 
     public function generateTransactions()
