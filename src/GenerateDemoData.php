@@ -32,7 +32,7 @@ class GenerateDemoData extends Command
         $this->generateBankAccounts();
         $this->generateBankAccountBalances();
         $this->generateLecturingSchedulesWithTransactions();
-        // $this->generateTransactions();
+        $this->generateTransactions();
 
         $this->info('Demo data sudah digenerate!');
     }
@@ -119,6 +119,25 @@ class GenerateDemoData extends Command
     public function generateTransactions()
     {
         $this->comment(date('Y-m-d H:i:s').' Start generate Transactions...');
+        foreach ($this->getDateRange() as $date) {
+            if ($date->greaterThan(today())) {
+                break;
+            }
+            $this->generateBillPaymentTransactions($date);
+            $this->generateSalaryTransactions($date);
+        }
         $this->comment(date('Y-m-d H:i:s').' Finish generate Transactions');
+    }
+
+    private function generateBillPaymentTransactions(Carbon $date)
+    {
+        // Generate electric bill payment on first tuesday every month
+        // Generate water bill payment on first tuesday every month
+        // Generate internet bill payment on third tuesday every month
+    }
+
+    private function generateSalaryTransactions(Carbon $date)
+    {
+        // Generate salary payment on last friday every month
     }
 }
