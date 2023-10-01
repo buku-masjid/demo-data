@@ -87,17 +87,16 @@ class GenerateDemoData extends Command
 
     private function getDateRange(): array
     {
+        // Ref: https://stackoverflow.com/a/4312630
         $dateRange = [];
-        $montRange = range(0, 2);
-        rsort($montRange);
-        foreach ($montRange as $number) {
-            $monthDate = Carbon::parse(now()->format('Y-m-').'10')->subMonths($number);
-            foreach (range(1, $monthDate->format('t')) as $dateNumber) {
-                $dateNumber = str_pad($dateNumber, 2, 0, STR_PAD_LEFT);
-                $dateRange[] = Carbon::parse($monthDate->format('Y-m-').$dateNumber);
-            }
+        $period = new \DatePeriod(
+            Carbon::parse(now()->subMonths(2)->format('Y-m').'-01'),
+            new \DateInterval('P1D'),
+            Carbon::parse(now()->addMonth()->format('Y-m-t'))
+        );
+        foreach ($period as $date) {
+            $dateRange[] = $date;
         }
-
         return $dateRange;
     }
 
