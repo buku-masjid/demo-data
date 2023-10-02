@@ -138,6 +138,42 @@ class GenerateDemoData extends Command
 
     private function generateSalaryTransactions(Carbon $date)
     {
-        // Generate salary payment on last friday every month
+        $salaryCategory = DB::table('categories')->where('name', 'Gaji Karyawan')->first();
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $salaryCategory->id,
+            'amount' => 2125000,
+            'description' => 'Insentif Fulan (Satpam)',
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $salaryCategory->id,
+            'amount' => 1000000,
+            'description' => 'Gaji Fulan',
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $salaryCategory->id,
+            'amount' => 750000,
+            'description' => 'Insentif Admin Fulan',
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $salaryCategory->id,
+            'amount' => 275000,
+            'description' => 'Insentif Fulan',
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
     }
 }
