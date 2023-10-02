@@ -131,13 +131,50 @@ class GenerateDemoData extends Command
 
     private function generateBillPaymentTransactions(Carbon $date)
     {
-        // Generate electric bill payment on first tuesday every month
-        // Generate water bill payment on first tuesday every month
-        // Generate internet bill payment on third tuesday every month
+        $firstTuesdayOfTheMonth = Carbon::parse('first tuesday of '.$date->format('F Y'));
+        if (!$date->equalTo($firstTuesdayOfTheMonth)) {
+            return;
+        }
+
+        $electricBillCategory = DB::table('categories')->where('name', 'Tagihan Listrik')->first();
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $electricBillCategory->id,
+            'amount' => 5496000,
+            'description' => 'Bayar tagihan listrik '.$date->isoFormat('MMMM Y'),
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
+        $waterBillCategory = DB::table('categories')->where('name', 'Tagihan Air')->first();
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $waterBillCategory->id,
+            'amount' => 757200,
+            'description' => 'Bayar tagihan PDAM '.$date->isoFormat('MMMM Y'),
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
+        $internetBillCategory = DB::table('categories')->where('name', 'Tagihan Air')->first();
+        DB::table('transactions')->insert([
+            'date' => $date->format('Y-m-d'),
+            'category_id' => $internetBillCategory->id,
+            'amount' => 431000,
+            'description' => 'Bayar tagihan Internet '.$date->isoFormat('MMMM Y'),
+            'in_out' => 0,
+            'book_id' => 1,
+            'creator_id' => 1,
+        ]);
     }
 
     private function generateSalaryTransactions(Carbon $date)
     {
+        $lastDayOfTheMonthDate = Carbon::parse($date->format('Y-m-t'));
+        if (!$date->equalTo($lastDayOfTheMonthDate)) {
+            return;
+        }
+
         $salaryCategory = DB::table('categories')->where('name', 'Gaji Karyawan')->first();
         DB::table('transactions')->insert([
             'date' => $date->format('Y-m-d'),
