@@ -4,6 +4,8 @@ namespace BukuMasjid\DemoData;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Console\View\Components\Info;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\DB;
 
 class GenerateDemoData extends Command
@@ -28,61 +30,65 @@ class GenerateDemoData extends Command
             }
         }
 
+        $this->write(Info::class, 'Generating data');
         $this->generateBooks();
         $this->generateBankAccounts();
         $this->generateBankAccountBalances();
         $this->generateLecturingSchedulesWithTransactions();
         $this->generateTransactions();
 
-        $this->info('Demo data sudah digenerate!');
+        $this->newLine();
+        $this->write(Info::class, 'Demo date has been generated.');
     }
 
     public function generateBooks()
     {
-        $this->comment(date('Y-m-d H:i:s').' Start generate Books...');
-        DB::table('books')->insert([
-            ['name' => 'Ramadhan 2022', 'description' => 'Buku catatan keuangan Ramadhan 2022', 'creator_id' => 1],
-            ['name' => 'Qurban 2022', 'description' => 'Buku catatan keuangan Qurban 2022', 'creator_id' => 1],
-            ['name' => 'Ramadhan 2023', 'description' => 'Buku catatan keuangan Ramadhan 2023', 'creator_id' => 1],
-            ['name' => 'Qurban 2023', 'description' => 'Buku catatan keuangan Qurban 2023', 'creator_id' => 1],
-        ]);
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Books');
+        $this->write(Task::class, 'Generate books', function () {
+            DB::table('books')->insert([
+                ['name' => 'Ramadhan 2022', 'description' => 'Buku catatan keuangan Ramadhan 2022', 'creator_id' => 1],
+                ['name' => 'Qurban 2022', 'description' => 'Buku catatan keuangan Qurban 2022', 'creator_id' => 1],
+                ['name' => 'Ramadhan 2023', 'description' => 'Buku catatan keuangan Ramadhan 2023', 'creator_id' => 1],
+                ['name' => 'Qurban 2023', 'description' => 'Buku catatan keuangan Qurban 2023', 'creator_id' => 1],
+            ]);
+        });
+        // $this->comment(date('Y-m-d H:i:s').' Start generate Books...');
+        // $this->comment(date('Y-m-d H:i:s').' Finish generate Books');
     }
 
     public function generateBankAccounts()
     {
-        $this->comment(date('Y-m-d H:i:s').' Start generate Bank Accounts...');
-        $bankAccountId = DB::table('bank_accounts')->insertGetId([
-            'name' => 'BSI Operasional Masjid',
-            'number' => '0123456789',
-            'account_name' => 'Masjid As-Salam',
-            'creator_id' => 1,
-        ]);
-        DB::table('books')->where('id', 1)->update(['bank_account_id' => $bankAccountId]);
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Bank Accounts');
+        $this->write(Task::class, 'Generate bank accounts', function () {
+            $bankAccountId = DB::table('bank_accounts')->insertGetId([
+                'name' => 'BSI Operasional Masjid',
+                'number' => '0123456789',
+                'account_name' => 'Masjid As-Salam',
+                'creator_id' => 1,
+            ]);
+            DB::table('books')->where('id', 1)->update(['bank_account_id' => $bankAccountId]);
+        });
     }
 
     public function generateBankAccountBalances()
     {
-        $this->comment(date('Y-m-d H:i:s').' Start generate Bank Account Balances...');
-        $firstBankAccount = DB::table('bank_accounts')->latest('id')->first();
-        DB::table('bank_account_balances')->insert([
-            ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(4)->format('Y-m-t'), 'amount' => 34568400, 'description' => 'Saldo akhir '.now()->subMonths(4)->isoFormat('MMMM Y'), 'creator_id' => 1],
-            ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(3)->format('Y-m-t'), 'amount' => 39268400, 'description' => 'Saldo akhir '.now()->subMonths(3)->isoFormat('MMMM Y'), 'creator_id' => 1],
-            ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(2)->format('Y-m-t'), 'amount' => 49568400, 'description' => 'Saldo akhir '.now()->subMonths(2)->isoFormat('MMMM Y'), 'creator_id' => 1],
-            ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(1)->format('Y-m-t'), 'amount' => 53297160, 'description' => 'Saldo akhir '.now()->subMonths(1)->isoFormat('MMMM Y'), 'creator_id' => 1],
-        ]);
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Bank Account Balances');
+        $this->write(Task::class, 'Generate bank account balances', function () {
+            $firstBankAccount = DB::table('bank_accounts')->latest('id')->first();
+            DB::table('bank_account_balances')->insert([
+                ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(4)->format('Y-m-t'), 'amount' => 34568400, 'description' => 'Saldo akhir '.now()->subMonths(4)->isoFormat('MMMM Y'), 'creator_id' => 1],
+                ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(3)->format('Y-m-t'), 'amount' => 39268400, 'description' => 'Saldo akhir '.now()->subMonths(3)->isoFormat('MMMM Y'), 'creator_id' => 1],
+                ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(2)->format('Y-m-t'), 'amount' => 49568400, 'description' => 'Saldo akhir '.now()->subMonths(2)->isoFormat('MMMM Y'), 'creator_id' => 1],
+                ['bank_account_id' => $firstBankAccount->id, 'date' => now()->subMonths(1)->format('Y-m-t'), 'amount' => 53297160, 'description' => 'Saldo akhir '.now()->subMonths(1)->isoFormat('MMMM Y'), 'creator_id' => 1],
+            ]);
+        });
     }
 
     public function generateLecturingSchedulesWithTransactions()
     {
-        $this->comment(date('Y-m-d H:i:s').' Start generate Lecturing Schedules...');
-        $dateRange = $this->getDateRange();
-        foreach ($dateRange as $date) {
-            $this->generateLecturingScheduleWithTransactions($date);
-        }
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Lecturing Schedules');
+        $this->write(Task::class, 'Generate lecturing schedules with transactions', function () {
+            $dateRange = $this->getDateRange();
+            foreach ($dateRange as $date) {
+                $this->generateLecturingScheduleWithTransactions($date);
+            }
+        });
     }
 
     private function getDateRange(): array
@@ -118,15 +124,15 @@ class GenerateDemoData extends Command
 
     public function generateTransactions()
     {
-        $this->comment(date('Y-m-d H:i:s').' Start generate Transactions...');
-        foreach ($this->getDateRange() as $date) {
-            if ($date->greaterThan(today())) {
-                break;
+        $this->write(Task::class, 'Generate bill and salary payment transactions', function () {
+            foreach ($this->getDateRange() as $date) {
+                if ($date->greaterThan(today())) {
+                    break;
+                }
+                $this->generateBillPaymentTransactions($date);
+                $this->generateSalaryTransactions($date);
             }
-            $this->generateBillPaymentTransactions($date);
-            $this->generateSalaryTransactions($date);
-        }
-        $this->comment(date('Y-m-d H:i:s').' Finish generate Transactions');
+        });
     }
 
     private function generateBillPaymentTransactions(Carbon $date)
@@ -212,5 +218,18 @@ class GenerateDemoData extends Command
             'book_id' => 1,
             'creator_id' => 1,
         ]);
+    }
+
+    protected function write($component, ...$arguments)
+    {
+        if ($this->output && class_exists($component)) {
+            (new $component($this->output))->render(...$arguments);
+        } else {
+            foreach ($arguments as $argument) {
+                if (is_callable($argument)) {
+                    $argument();
+                }
+            }
+        }
     }
 }
