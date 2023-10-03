@@ -23,7 +23,7 @@ class ThursdayLecturingTransactionsGenerator
         DB::table('transactions')->insert([
             'date' => $date->format('Y-m-d'),
             'category_id' => $lecturingInfaqCategory->id,
-            'amount' => 500000,
+            'amount' => 1000000,
             'description' => 'Kotak infaq kajian subuh Kamis',
             'in_out' => 1,
             'book_id' => 1,

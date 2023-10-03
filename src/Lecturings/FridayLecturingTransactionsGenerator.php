@@ -50,7 +50,7 @@ class FridayLecturingTransactionsGenerator
         DB::table('transactions')->insert([
             'date' => $date->format('Y-m-d'),
             'category_id' => $lecturingInfaqCategory->id,
-            'amount' => 500000,
+            'amount' => 1500000,
             'description' => 'Kotak infaq hari Jumat',
             'in_out' => 1,
             'book_id' => 1,
