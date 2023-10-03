@@ -14,17 +14,17 @@ class GenerateDemoData extends Command
                             {--reset-all : Reset seluruh isi database}
                             ';
 
-    protected $description = 'Generate data demo untuk simulasi.';
+    protected $description = 'Generate demo data for simulation';
 
     public function handle()
     {
-        $confirm = $this->confirm('Anda yakin ini generate data demo?');
+        $confirm = $this->confirm('Are you sure to generate demo data?');
         if ($confirm == false) {
             return;
         }
 
         if ($this->option('reset-all')) {
-            $confirm = $this->confirm('Kosongkan seluruh isi database?');
+            $confirm = $this->confirm('Are you sure to reset all database?');
             if ($confirm) {
                 $this->call('migrate:fresh', ['--seed' => true]);
             }

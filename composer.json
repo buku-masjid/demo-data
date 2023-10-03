@@ -1,6 +1,6 @@
 {
     "name": "buku-masjid/demo-data",
-    "description": "Generate data demo untuk simulasi.",
+    "description": "Generate demo data for simulation.",
     "type": "library",
     "license": "MIT",
     "autoload": {
