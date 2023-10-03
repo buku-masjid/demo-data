@@ -156,7 +156,7 @@ class GenerateDemoData extends Command
             'book_id' => 1,
             'creator_id' => 1,
         ]);
-        $internetBillCategory = DB::table('categories')->where('name', 'Tagihan Air')->first();
+        $internetBillCategory = DB::table('categories')->where('name', 'Tagihan Internet')->first();
         DB::table('transactions')->insert([
             'date' => $date->format('Y-m-d'),
             'category_id' => $internetBillCategory->id,
