@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class FridayLecturingGenerator
 {
+    use RandomLecturerNames;
+
     public function generate(Carbon $date)
     {
         DB::table('lecturing_schedules')->insert([
@@ -14,7 +16,7 @@ class FridayLecturingGenerator
             'date' => $date->format('Y-m-d'),
             'start_time' => '12:20',
             'time_text' => null,
-            'lecturer_name' => 'Ustadz Fulan, S. Ag, M. Ag.',
+            'lecturer_name' => $this->randomLecturer(),
             'creator_id' => 1,
         ]);
     }
