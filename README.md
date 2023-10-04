@@ -14,7 +14,7 @@ $ composer require buku-masjid/demo-data --dev
 
 ## Cara Pakai
 
-Generate demo data:
+Generate demo data (3 bulan terakhir):
 
 ```bash
 $ php artisan buku-masjid:demo-data
@@ -23,7 +23,19 @@ $ php artisan buku-masjid:demo-data
 Generate demo data dengan me-reset seluruh isi database.
 
 ```bash
-$ php artisan buku-masjid:demo-data --reset-all
+$ php artisan buku-masjid:generate-demo-data --reset-all
+```
+
+Generate demo data dengan rentang tanggal tertentu.
+
+```bash
+$ php artisan buku-masjid:generate-demo-data --start_date=2023-07-01 --end_date=2023-10-31
+```
+
+Hapus semua demo data (yang `created_at` nya `NULL`)
+
+```bash
+$ php artisan buku-masjid:remove-demo-data
 ```
 
 ## Lisensi
