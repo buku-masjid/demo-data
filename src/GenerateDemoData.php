@@ -147,35 +147,41 @@ class GenerateDemoData extends Command
         }
 
         $electricBillCategory = DB::table('categories')->where('name', 'Tagihan Listrik')->first();
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $electricBillCategory->id,
-            'amount' => 5496000,
-            'description' => 'Bayar tagihan listrik '.$date->isoFormat('MMMM Y'),
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
+        if ($electricBillCategory) {
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $electricBillCategory->id,
+                'amount' => 5496000,
+                'description' => 'Bayar tagihan listrik '.$date->isoFormat('MMMM Y'),
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+        }
         $waterBillCategory = DB::table('categories')->where('name', 'Tagihan Air')->first();
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $waterBillCategory->id,
-            'amount' => 757200,
-            'description' => 'Bayar tagihan PDAM '.$date->isoFormat('MMMM Y'),
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
+        if ($waterBillCategory) {
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $waterBillCategory->id,
+                'amount' => 757200,
+                'description' => 'Bayar tagihan PDAM '.$date->isoFormat('MMMM Y'),
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+        }
         $internetBillCategory = DB::table('categories')->where('name', 'Tagihan Internet')->first();
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $internetBillCategory->id,
-            'amount' => 431000,
-            'description' => 'Bayar tagihan Internet '.$date->isoFormat('MMMM Y'),
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
+        if ($internetBillCategory) {
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $internetBillCategory->id,
+                'amount' => 431000,
+                'description' => 'Bayar tagihan Internet '.$date->isoFormat('MMMM Y'),
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+        }
     }
 
     private function generateSalaryTransactions(Carbon $date)
@@ -186,42 +192,44 @@ class GenerateDemoData extends Command
         }
 
         $salaryCategory = DB::table('categories')->where('name', 'Gaji Karyawan')->first();
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $salaryCategory->id,
-            'amount' => 2125000,
-            'description' => 'Insentif Fulan (Satpam)',
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $salaryCategory->id,
-            'amount' => 1000000,
-            'description' => 'Gaji Fulan',
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $salaryCategory->id,
-            'amount' => 750000,
-            'description' => 'Insentif Admin Fulan',
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
-        DB::table('transactions')->insert([
-            'date' => $date->format('Y-m-d'),
-            'category_id' => $salaryCategory->id,
-            'amount' => 275000,
-            'description' => 'Insentif Fulan',
-            'in_out' => 0,
-            'book_id' => 1,
-            'creator_id' => 1,
-        ]);
+        if ($salaryCategory) {
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $salaryCategory->id,
+                'amount' => 2125000,
+                'description' => 'Insentif Fulan (Satpam)',
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $salaryCategory->id,
+                'amount' => 1000000,
+                'description' => 'Gaji Fulan',
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $salaryCategory->id,
+                'amount' => 750000,
+                'description' => 'Insentif Admin Fulan',
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+            DB::table('transactions')->insert([
+                'date' => $date->format('Y-m-d'),
+                'category_id' => $salaryCategory->id,
+                'amount' => 275000,
+                'description' => 'Insentif Fulan',
+                'in_out' => 0,
+                'book_id' => 1,
+                'creator_id' => 1,
+            ]);
+        }
     }
 
     protected function write($component, ...$arguments)
