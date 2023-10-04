@@ -8,7 +8,7 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
-        if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole() && app()->environment() != 'production') {
             $this->commands([
                 GenerateDemoData::class,
                 RemoveDemoData::class,
