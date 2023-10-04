@@ -53,8 +53,6 @@ class GenerateDemoData extends Command
                 ['name' => 'Qurban 2023', 'description' => 'Buku catatan keuangan Qurban 2023', 'creator_id' => 1],
             ]);
         });
-        // $this->comment(date('Y-m-d H:i:s').' Start generate Books...');
-        // $this->comment(date('Y-m-d H:i:s').' Finish generate Books');
     }
 
     public function generateBankAccounts()
