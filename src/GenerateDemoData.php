@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\DB;
 class GenerateDemoData extends Command
 {
     protected $signature = 'buku-masjid:generate-demo-data
-                            {--reset-all : Reset seluruh isi database}
+                            {--reset-all : Reset database data}
+                            {--start_date= : Demo data start date}
+                            {--end_date= : Demo data end date}
                             ';
 
     protected $description = 'Generate demo data for simulation';
@@ -95,10 +97,14 @@ class GenerateDemoData extends Command
     {
         // Ref: https://stackoverflow.com/a/4312630
         $dateRange = [];
+        $givenStartDate = $this->option('start_date');
+        $givenEndDate = $this->option('end_date');
+        $startDate = $givenStartDate ?: now()->subMonths(2)->format('Y-m').'-01';
+        $endDate = $givenEndDate ?: now()->addMonth()->format('Y-m-t');
         $period = new \DatePeriod(
-            Carbon::parse(now()->subMonths(2)->format('Y-m').'-01'),
+            Carbon::parse($startDate),
             new \DateInterval('P1D'),
-            Carbon::parse(now()->addMonth()->format('Y-m-t'))
+            Carbon::parse($endDate)
         );
         foreach ($period as $date) {
             $dateRange[] = $date;
