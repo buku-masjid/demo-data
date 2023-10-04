@@ -1,6 +1,6 @@
 {
     "name": "buku-masjid/demo-data",
-    "description": "Generate demo data for simulation.",
+    "description": "Generate demo data for buku masjid simulation.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -18,9 +18,6 @@
     "require": {
         "php": ">= 8.1",
         "laravel/framework": "^10.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.0"
     },
     "extra": {
         "laravel": {
