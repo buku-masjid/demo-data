@@ -105,7 +105,7 @@ class GenerateDemoData extends Command
             Carbon::parse($endDate)
         );
         foreach ($period as $date) {
-            $dateRange[] = $date;
+            $dateRange[] = new Carbon($date);
         }
         return $dateRange;
     }
