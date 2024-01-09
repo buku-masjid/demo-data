@@ -57,7 +57,7 @@ class RemoveDemoData extends Command
     public function removeLecturingSchedules()
     {
         $this->write(Task::class, 'Remove demo lecturing schedules', function () {
-            DB::table('lecturing_schedules')->whereNull('created_at')->delete();
+            DB::table('lecturings')->whereNull('created_at')->delete();
         });
     }
 

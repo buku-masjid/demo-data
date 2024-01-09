@@ -11,7 +11,7 @@ class SundayLecturingGenerator
 
     public function generate(Carbon $date)
     {
-        DB::table('lecturing_schedules')->insert([
+        DB::table('lecturings')->insert([
             'audience_code' => 'public',
             'date' => $date->format('Y-m-d'),
             'start_time' => '05:50',
