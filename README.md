@@ -17,7 +17,7 @@ $ composer require buku-masjid/demo-data --dev
 Generate demo data (3 bulan terakhir):
 
 ```bash
-$ php artisan buku-masjid:demo-data
+$ php artisan buku-masjid:generate-demo-data
 ```
 
 Generate demo data dengan me-reset seluruh isi database.
